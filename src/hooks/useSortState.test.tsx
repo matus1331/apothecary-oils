@@ -33,4 +33,10 @@ describe('useSortState', () => {
     const { result } = renderHook(() => useSortState())
     expect(result.current.active).toBeNull()
   })
+  it('setSort writes an explicit state and its URL', () => {
+    const { result } = renderHook(() => useSortState())
+    act(() => result.current.setSort({ key: 'expiryDate', dir: 'asc' }))
+    expect(result.current.sort).toEqual({ key: 'expiryDate', dir: 'asc' })
+    expect(window.location.search).toBe('?sort=expiryDate&dir=asc')
+  })
 })

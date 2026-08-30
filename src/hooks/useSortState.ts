@@ -36,5 +36,10 @@ export function useSortState() {
     })
   }, [])
 
-  return { sort: active ?? DEFAULT_SORT, active, toggle }
+  const setSort = useCallback((next: SortState | null) => {
+    write(next)
+    setActive(next)
+  }, [])
+
+  return { sort: active ?? DEFAULT_SORT, active, toggle, setSort }
 }
