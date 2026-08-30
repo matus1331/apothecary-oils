@@ -14,9 +14,12 @@ describe('test db', () => {
       .values({ productType: 'essential', name: 'Levandule', manufacturerId: m.id })
       .returning()
     expect(o.lowStock).toBe(false)
+    expect(o.createdAt).toBeGreaterThan(0)
+    expect(o.updatedAt).toBeGreaterThan(0)
 
     await db.delete(manufacturers).where(sql`id = ${m.id}`)
     const rows = await db.select().from(oils)
+    expect(rows).toHaveLength(1)
     expect(rows[0].manufacturerId).toBeNull()
   })
 })
