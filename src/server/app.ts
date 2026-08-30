@@ -24,6 +24,12 @@ export function createApp(db: Db): Hono {
   const app = new Hono().basePath('/api')
   app.use('*', cors())
 
+  // One shared limiter across all mutation routes — a per-route instance would give each
+  // HTTP method its own 60/min budget.
+  const limiter = rateLimit({ windowMs: 60_000, max: 60 })
+
+  app.onError((_err, c) => c.json({ error: 'Chyba serveru' }, 500))
+
   const selectOils = () =>
     db
       .select({
@@ -75,7 +81,7 @@ export function createApp(db: Db): Hono {
     return c.json(rows)
   })
 
-  app.post('/oils', rateLimit({ windowMs: 60_000, max: 60 }), async (c) => {
+  app.post('/oils', limiter, async (c) => {
     const body = await c.req.json().catch(() => null)
     const parsed = oilInputSchema.safeParse(body)
     if (!parsed.success) {
@@ -94,7 +100,7 @@ export function createApp(db: Db): Hono {
     return c.json(rowToOil(full), 201)
   })
 
-  app.put('/oils/:id', rateLimit({ windowMs: 60_000, max: 60 }), async (c) => {
+  app.put('/oils/:id', limiter, async (c) => {
     const id = Number(c.req.param('id'))
     if (!Number.isInteger(id)) return c.json({ error: 'Neplatné ID' }, 400)
     const body = await c.req.json().catch(() => null)
@@ -120,7 +126,7 @@ export function createApp(db: Db): Hono {
     return c.json(rowToOil(full))
   })
 
-  app.delete('/oils/:id', rateLimit({ windowMs: 60_000, max: 60 }), async (c) => {
+  app.delete('/oils/:id', limiter, async (c) => {
     const id = Number(c.req.param('id'))
     if (!Number.isInteger(id)) return c.json({ error: 'Neplatné ID' }, 400)
     const res = await db.delete(oils).where(eq(oils.id, id)).returning({ id: oils.id })

@@ -20,6 +20,8 @@ export function daysUntil(iso: string, today: Date): number {
 
 export function expiryStatus(iso: string | null, today: Date): ExpiryStatus {
   if (!iso) return 'none'
+  // Fail closed on an unparseable string rather than silently reporting 'ok'.
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso) || Number.isNaN(Date.parse(iso))) return 'none'
   const d = daysUntil(iso, today)
   if (d < 0) return 'expired'
   if (d <= EXPIRING_WINDOW_DAYS) return 'expiring'

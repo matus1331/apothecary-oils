@@ -6,7 +6,7 @@ import { ThemeToggle } from './ThemeToggle'
 
 export function AppHeader({ onAdd }: { onAdd: () => void }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-line bg-bg/85 pt-[env(safe-area-inset-top)] backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
         <h1 className="font-serif text-xl text-ink">Oleje</h1>
         <div className="ml-auto flex items-center gap-2">

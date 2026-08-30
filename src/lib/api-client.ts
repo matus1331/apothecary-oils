@@ -26,7 +26,7 @@ async function request(path: string, init?: RequestInit): Promise<unknown> {
       headers: { 'content-type': 'application/json', ...(init?.headers ?? {}) },
     })
   } catch {
-    throw new ApiError(0, 'Bez připojení')
+    throw new ApiError(0, 'Bez připojení — změna se neuložila')
   }
   const isJson = res.headers.get('content-type')?.includes('application/json')
   const body = isJson ? await res.json().catch(() => null) : null

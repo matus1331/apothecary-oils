@@ -13,6 +13,10 @@ describe('daysUntil', () => {
 
 describe('expiryStatus', () => {
   it('none when no date', () => expect(expiryStatus(null, today)).toBe('none'))
+  it('none when the string is unparseable', () => {
+    expect(expiryStatus('garbage', today)).toBe('none')
+    expect(expiryStatus('2026-13-45', today)).toBe('none')
+  })
   it('expired strictly before today', () =>
     expect(expiryStatus('2026-08-29', today)).toBe('expired'))
   it('expiring today and through +90 inclusive', () => {

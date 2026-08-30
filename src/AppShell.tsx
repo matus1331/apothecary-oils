@@ -6,6 +6,7 @@ import { OilFormDrawer } from '@/components/OilFormDrawer'
 import { OilsView } from '@/components/OilsView'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { IconButton } from '@/components/ui/IconButton'
+import { Skeleton } from '@/components/ui/Skeleton'
 import { toast } from '@/components/ui/toast'
 import { Button } from '@/components/ui/Button'
 import { useManufacturers } from '@/hooks/useManufacturers'
@@ -70,6 +71,9 @@ export function AppShell() {
       <AppHeader onAdd={() => setDrawer({ mode: 'add' })} />
 
       <main className="mx-auto max-w-5xl px-4 py-6">
+        {oils.isFetching && !oils.isLoading && (
+          <Skeleton className="mb-3 h-1 w-full" />
+        )}
         {oils.isError ? (
           <div className="rounded-xl border border-danger/40 bg-danger-bg p-4 text-sm text-danger">
             Nepodařilo se načíst data.
@@ -101,7 +105,7 @@ export function AppShell() {
         )}
       </main>
 
-      <div className="fixed bottom-5 right-5 sm:hidden">
+      <div className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-5 sm:hidden">
         <IconButton
           label="Přidat olej"
           onClick={() => setDrawer({ mode: 'add' })}

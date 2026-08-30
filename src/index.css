@@ -1,10 +1,17 @@
 @import 'tailwindcss';
-@import '@fontsource/fraunces/400.css';
-@import '@fontsource/fraunces/500.css';
-@import '@fontsource/fraunces/600.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/inter/600.css';
+/* latin + latin-ext only — keeps Cyrillic/Greek/Vietnamese subsets out of the precache. */
+@import '@fontsource/fraunces/latin-400.css';
+@import '@fontsource/fraunces/latin-ext-400.css';
+@import '@fontsource/fraunces/latin-500.css';
+@import '@fontsource/fraunces/latin-ext-500.css';
+@import '@fontsource/fraunces/latin-600.css';
+@import '@fontsource/fraunces/latin-ext-600.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-ext-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-ext-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-ext-600.css';
 
 @theme {
   --font-serif: 'Fraunces', Georgia, serif;

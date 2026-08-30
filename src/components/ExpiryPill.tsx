@@ -1,5 +1,6 @@
 import { daysUntil, expiryStatus } from '@/lib/expiry'
 import { cn } from '@/lib/cn'
+import { plural } from '@/shared/plural'
 
 export function ExpiryPill({ date, today = new Date() }: { date: string | null; today?: Date }) {
   if (!date) return <span className="text-muted">—</span>
@@ -19,7 +20,7 @@ export function ExpiryPill({ date, today = new Date() }: { date: string | null; 
       </span>
       {status === 'expired' && <span className="text-xs font-medium text-danger">po expiraci</span>}
       {status === 'expiring' && (
-        <span className="text-xs text-warn">za {d} dní</span>
+        <span className="text-xs text-warn">za {d} {plural(d, ['den', 'dny', 'dní'])}</span>
       )}
     </span>
   )

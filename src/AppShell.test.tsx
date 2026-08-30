@@ -22,13 +22,21 @@ function renderShell() {
   )
 }
 
-beforeEach(() => {
+function stubMatchMedia(matches: boolean) {
   vi.stubGlobal('matchMedia', (q: string) => ({
-    matches: true, media: q, addEventListener: () => {}, removeEventListener: () => {},
+    matches, media: q, addEventListener: () => {}, removeEventListener: () => {},
   }))
+}
+
+beforeEach(() => {
+  vi.setSystemTime(new Date(2026, 7, 30))
+  stubMatchMedia(true)
   vi.spyOn(api, 'getManufacturers').mockResolvedValue([{ id: 1, name: 'Nobilis' }])
 })
-afterEach(() => vi.restoreAllMocks())
+afterEach(() => {
+  vi.useRealTimers()
+  vi.restoreAllMocks()
+})
 
 describe('AppShell', () => {
   it('shows the loading screen then the table', async () => {
@@ -61,11 +69,21 @@ describe('AppShell', () => {
 
   it('surfaces an error toast when a mutation fails', async () => {
     vi.spyOn(api, 'getOils').mockResolvedValue([oil])
-    vi.spyOn(api, 'updateOil').mockRejectedValue(new api.ApiError(0, 'Bez připojení — změna se neuložila'))
+    // Real fetch failure so the assertion exercises api-client's actual catch branch + message.
+    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new TypeError('Failed to fetch'))
     renderShell()
     await userEvent.click(await screen.findByText('Levandule'))
     const dialog = screen.getByRole('dialog')
     await userEvent.click(within(dialog).getByRole('button', { name: 'Uložit' }))
     expect(await screen.findByText('Bez připojení — změna se neuložila')).toBeInTheDocument()
+  })
+
+  it('renders the mobile cards branch when matchMedia does not match', async () => {
+    stubMatchMedia(false)
+    vi.spyOn(api, 'getOils').mockResolvedValue([oil])
+    renderShell()
+    expect(await screen.findByText('Levandule')).toBeInTheDocument()
+    expect(screen.getByText('Seřadit podle')).toBeInTheDocument()
+    expect(screen.queryByRole('table')).toBeNull()
   })
 })

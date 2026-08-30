@@ -25,7 +25,10 @@ const formSchema = z.object({
   manufacturerName: z.string().max(120, 'Maximálně 120 znaků'),
   expiryDate: z
     .string()
-    .refine((v) => v === '' || /^\d{4}-\d{2}-\d{2}$/.test(v), 'Neplatné datum'),
+    .refine(
+      (v) => v === '' || (/^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v))),
+      'Neplatné datum',
+    ),
   lowStock: z.boolean(),
   note: z.string().max(2000, 'Maximálně 2000 znaků'),
 })
