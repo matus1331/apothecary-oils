@@ -1,3 +1,3 @@
 export default function App() {
-  return <div className="p-6 text-ink">Oleje</div>
+  return <div className="min-h-dvh bg-bg text-ink font-serif p-6">Oleje</div>
 }

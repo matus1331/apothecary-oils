@@ -1,1 +1,86 @@
 @import 'tailwindcss';
+@import '@fontsource/fraunces/400.css';
+@import '@fontsource/fraunces/500.css';
+@import '@fontsource/fraunces/600.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
+@theme {
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --color-bg: #f7f4ee;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fcfaf6;
+  --color-ink: #2a2724;
+  --color-muted: #6b655c;
+  --color-line: #e4ddd0;
+  --color-accent: #3b5d4e;
+  --color-accent-weak: #e8efea;
+  --color-warn: #b0791f;
+  --color-warn-bg: #fbf1df;
+  --color-danger: #9a3b2e;
+  --color-danger-bg: #f6e4e0;
+
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+  --animate-drip: drip 1.6s ease-in-out infinite;
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #1e1c19;
+  --color-surface: #262320;
+  --color-surface-alt: #2b2824;
+  --color-ink: #efe9df;
+  --color-muted: #a7a093;
+  --color-line: #3a352e;
+  --color-accent: #7fb39b;
+  --color-accent-weak: #2c3b34;
+  --color-warn: #d8a24e;
+  --color-warn-bg: #38301f;
+  --color-danger: #d8897a;
+  --color-danger-bg: #3a2723;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg: #1e1c19;
+    --color-surface: #262320;
+    --color-surface-alt: #2b2824;
+    --color-ink: #efe9df;
+    --color-muted: #a7a093;
+    --color-line: #3a352e;
+    --color-accent: #7fb39b;
+    --color-accent-weak: #2c3b34;
+    --color-warn: #d8a24e;
+    --color-warn-bg: #38301f;
+    --color-danger: #d8897a;
+    --color-danger-bg: #3a2723;
+  }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes drip {
+  0% { transform: translateY(-8px) scaleY(0.9); opacity: 0; }
+  30% { opacity: 1; }
+  70% { transform: translateY(30px) scaleY(1.05); opacity: 1; }
+  100% { transform: translateY(44px) scaleY(0.6); opacity: 0; }
+}
+
+@layer base {
+  html { color-scheme: light dark; }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+}
