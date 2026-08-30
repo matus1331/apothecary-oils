@@ -6,6 +6,10 @@ dist
 *.log
 .DS_Store
 
+# Local SQLite / libSQL databases (migrations under db/migrations are tracked)
+local.db
+*.db
+
 # Build / tooling output
 dist-ssr
 dev-dist
