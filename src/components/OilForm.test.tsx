@@ -23,9 +23,7 @@ const existing: Oil = {
 describe('OilForm', () => {
   it('blocks submit and shows errors when required fields are missing', async () => {
     const onSubmit = vi.fn()
-    render(
-      <OilForm manufacturers={manufacturers} onSubmit={onSubmit} onCancel={() => {}} />,
-    )
+    render(<OilForm manufacturers={manufacturers} onSubmit={onSubmit} />)
     await userEvent.click(screen.getByRole('button', { name: 'Uložit' }))
     expect(onSubmit).not.toHaveBeenCalled()
     expect(await screen.findByText('Zadejte název')).toBeInTheDocument()
@@ -34,7 +32,7 @@ describe('OilForm', () => {
 
   it('submits a normalized OilInput for a new oil', async () => {
     const onSubmit = vi.fn()
-    render(<OilForm manufacturers={manufacturers} onSubmit={onSubmit} onCancel={() => {}} />)
+    render(<OilForm manufacturers={manufacturers} onSubmit={onSubmit} />)
     await userEvent.click(screen.getByRole('radio', { name: 'Éterický olej' }))
     await userEvent.type(screen.getByLabelText('Název'), '  Levandule ')
     await userEvent.type(screen.getByRole('combobox'), 'Nobilis Tilia')
@@ -59,7 +57,6 @@ describe('OilForm', () => {
         manufacturers={manufacturers}
         onSubmit={() => {}}
         onDelete={onDelete}
-        onCancel={() => {}}
       />,
     )
     expect(screen.getByLabelText('Název')).toHaveValue('Mandlový olej')
@@ -76,7 +73,6 @@ describe('OilForm', () => {
         manufacturers={manufacturers}
         onSubmit={() => {}}
         onDelete={() => {}}
-        onCancel={() => {}}
       />,
     )
     const save = screen.getByRole('button', { name: 'Uložit' })
@@ -86,14 +82,14 @@ describe('OilForm', () => {
   })
 
   it('leaves "Uložit" enabled for a new oil (add mode)', () => {
-    render(<OilForm manufacturers={manufacturers} onSubmit={() => {}} onCancel={() => {}} />)
+    render(<OilForm manufacturers={manufacturers} onSubmit={() => {}} />)
     expect(screen.getByRole('button', { name: 'Uložit' })).toBeEnabled()
   })
 
   it('the "+1 rok" chip fills the expiry date', async () => {
     const onSubmit = vi.fn()
     vi.setSystemTime(new Date(2026, 0, 15))
-    render(<OilForm manufacturers={manufacturers} onSubmit={onSubmit} onCancel={() => {}} />)
+    render(<OilForm manufacturers={manufacturers} onSubmit={onSubmit} />)
     await userEvent.click(screen.getByRole('button', { name: '+1 rok' }))
     expect(screen.getByLabelText('Datum expirace')).toHaveValue('2027-01-15')
     vi.useRealTimers()

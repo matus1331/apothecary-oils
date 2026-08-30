@@ -61,10 +61,9 @@ type Props = {
   submitting?: boolean
   onSubmit: (input: OilInput) => void
   onDelete?: () => void
-  onCancel: () => void
 }
 
-export function OilForm({ defaultOil, manufacturers, submitting, onSubmit, onDelete, onCancel }: Props) {
+export function OilForm({ defaultOil, manufacturers, submitting, onSubmit, onDelete }: Props) {
   const {
     control,
     register,
@@ -141,10 +140,24 @@ export function OilForm({ defaultOil, manufacturers, submitting, onSubmit, onDel
             className="h-10 rounded-lg border border-line bg-surface px-3 text-sm text-ink focus:ring-2 focus:ring-accent/40"
             {...register('expiryDate')}
           />
-          <Button type="button" variant="ghost" size="sm" onClick={() => setValue('expiryDate', addYears(1), { shouldValidate: true, shouldDirty: true })}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() =>
+              setValue('expiryDate', addYears(1), { shouldValidate: true, shouldDirty: true })
+            }
+          >
             +1 rok
           </Button>
-          <Button type="button" variant="ghost" size="sm" onClick={() => setValue('expiryDate', addYears(2), { shouldValidate: true, shouldDirty: true })}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() =>
+              setValue('expiryDate', addYears(2), { shouldValidate: true, shouldDirty: true })
+            }
+          >
             +2 roky
           </Button>
         </div>
@@ -161,15 +174,17 @@ export function OilForm({ defaultOil, manufacturers, submitting, onSubmit, onDel
       </Field>
 
       <Field label="Poznámka" error={err('note')} htmlFor="oil-note">
-        <Textarea id="oil-note" aria-label="Poznámka" invalid={!!err('note')} {...register('note')} />
+        <Textarea
+          id="oil-note"
+          aria-label="Poznámka"
+          invalid={!!err('note')}
+          {...register('note')}
+        />
       </Field>
 
       <div className="mt-1 flex flex-wrap items-center gap-2">
         <Button type="submit" disabled={submitting || (isEdit && !isDirty)}>
           Uložit
-        </Button>
-        <Button type="button" variant="ghost" onClick={onCancel}>
-          Zrušit
         </Button>
         {onDelete && (
           <Button type="button" variant="danger" className="ml-auto" onClick={onDelete}>

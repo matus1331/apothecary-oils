@@ -16,7 +16,15 @@ type Props = {
   onClose: () => void
 }
 
-export function OilFormDrawer({ open, oil, manufacturers, submitting, onSubmit, onDelete, onClose }: Props) {
+export function OilFormDrawer({
+  open,
+  oil,
+  manufacturers,
+  submitting,
+  onSubmit,
+  onDelete,
+  onClose,
+}: Props) {
   const isDesktop = useMediaQuery('(min-width: 640px)')
 
   return (
@@ -61,7 +69,6 @@ export function OilFormDrawer({ open, oil, manufacturers, submitting, onSubmit, 
                     submitting={submitting}
                     onSubmit={onSubmit}
                     onDelete={onDelete}
-                    onCancel={onClose}
                   />
                 </div>
               </motion.div>
