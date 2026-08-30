@@ -1,10 +1,10 @@
 import { asc, eq, sql } from 'drizzle-orm'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { manufacturers, oils } from '../../db/schema'
-import { oilInputSchema, type Oil } from '../shared/schema'
-import type { Db } from './db'
-import { rateLimit } from './rate-limit'
+import { manufacturers, oils } from '../../db/schema.js'
+import { oilInputSchema, type Oil } from '../shared/schema.js'
+import type { Db } from './db.js'
+import { rateLimit } from './rate-limit.js'
 
 const rowToOil = (r: {
   id: number

@@ -1,6 +1,6 @@
 import { handle } from 'hono/vercel'
-import { createApp } from '../src/server/app'
-import { getDb } from '../src/server/db'
+import { createApp } from '../src/server/app.js'
+import { getDb } from '../src/server/db.js'
 
 export const config = { runtime: 'nodejs' }
 

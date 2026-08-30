@@ -2,8 +2,8 @@ import { createClient } from '@libsql/client'
 import { sql } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/libsql'
 import { migrate } from 'drizzle-orm/libsql/migrator'
-import * as schema from '../../db/schema'
-import type { Db } from './db'
+import * as schema from '../../db/schema.js'
+import type { Db } from './db.js'
 
 export async function createTestDb(): Promise<Db> {
   const client = createClient({ url: ':memory:' })
