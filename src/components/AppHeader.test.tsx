@@ -7,7 +7,7 @@ describe('AppHeader', () => {
   it('renders the title and fires onAdd', async () => {
     const onAdd = vi.fn()
     render(<AppHeader onAdd={onAdd} />)
-    expect(screen.getByRole('heading', { name: 'Oleje' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Olejovník' })).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: /Přidat olej/ }))
     expect(onAdd).toHaveBeenCalled()
   })

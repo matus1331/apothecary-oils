@@ -17,7 +17,7 @@ describe('vite config', () => {
     expect(names.some((n) => n.toLowerCase().includes('pwa'))).toBe(true)
   })
 
-  // The VitePWA `manifest` / `workbox` options (manifest.name === 'Oleje'; the `/api/`
+  // The VitePWA `manifest` / `workbox` options (manifest.short_name === 'Olejovník'; the `/api/`
   // runtimeCaching entry with handler 'NetworkFirst' + method 'GET'; navigateFallbackDenylist
   // containing /^\/api\//) are not exposed on the resolved plugin objects, so they cannot be
   // introspected here. Invariant they encode: offline is read-only — only GET /api/ responses

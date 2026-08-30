@@ -13,8 +13,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Oleje',
-        short_name: 'Oleje',
+        name: 'Olejovník — osobní databáze olejů',
+        short_name: 'Olejovník',
         description: 'Osobní databáze éterických olejů, rostlinných olejů a hydrolátů',
         lang: 'cs',
         start_url: '/',

@@ -1,4 +1,4 @@
-# Oleje — osobní databáze olejů
+# Olejovník — osobní databáze olejů
 
 Vite + React + TypeScript SPA, Hono API na Vercel Functions, Turso (libSQL) přes Drizzle. Instalovatelná PWA.
 
