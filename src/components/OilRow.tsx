@@ -11,7 +11,7 @@ export function OilRow({ oil, today, onOpen }: Props) {
   return (
     <tr
       tabIndex={0}
-      role="button"
+      aria-label={`Upravit ${oil.name}`}
       onClick={() => onOpen(oil)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
