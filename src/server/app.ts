@@ -2,13 +2,13 @@ import { asc, eq, sql } from 'drizzle-orm'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { manufacturers, oils } from '../../db/schema.js'
-import { oilInputSchema, type Oil } from '../shared/schema.js'
+import { oilInputSchema, type Oil, type ProductType } from '../shared/schema.js'
 import type { Db } from './db.js'
 import { rateLimit } from './rate-limit.js'
 
 const rowToOil = (r: {
   id: number
-  productType: 'essential' | 'carrier' | 'hydrosol'
+  productType: ProductType
   name: string
   latinName: string | null
   manufacturerId: number | null

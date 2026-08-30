@@ -36,5 +36,9 @@ describe('oilInputSchema', () => {
     expect(PRODUCT_TYPE_LABELS.essential).toBe('Éterický olej')
     expect(PRODUCT_TYPE_LABELS.carrier).toBe('Rostlinný olej')
     expect(PRODUCT_TYPE_LABELS.hydrosol).toBe('Hydrolát')
+    expect(PRODUCT_TYPE_LABELS.other).toBe('Ostatní')
+  })
+  it('accepts the "other" product type', () => {
+    expect(oilInputSchema.parse({ ...valid, productType: 'other' }).productType).toBe('other')
   })
 })

@@ -67,7 +67,7 @@ export function AppShell() {
   if (oils.isLoading) return <LoadingScreen />
 
   return (
-    <div className="min-h-dvh bg-bg">
+    <div className="min-h-dvh overflow-x-hidden bg-bg">
       <AppHeader onAdd={() => setDrawer({ mode: 'add' })} />
 
       <main className="mx-auto max-w-5xl px-4 py-6">

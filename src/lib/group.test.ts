@@ -17,10 +17,16 @@ const oil = (productType: Oil['productType'], name: string): Oil => ({
 })
 
 describe('groupByType', () => {
-  it('returns groups in fixed order essential → carrier → hydrosol', () => {
-    const groups = groupByType([oil('hydrosol', 'H'), oil('essential', 'E'), oil('carrier', 'C')])
-    expect(groups.map((g) => g.type)).toEqual(['essential', 'carrier', 'hydrosol'])
+  it('returns groups in fixed order essential → carrier → hydrosol → other', () => {
+    const groups = groupByType([
+      oil('other', 'O'),
+      oil('hydrosol', 'H'),
+      oil('essential', 'E'),
+      oil('carrier', 'C'),
+    ])
+    expect(groups.map((g) => g.type)).toEqual(['essential', 'carrier', 'hydrosol', 'other'])
     expect(groups[0].label).toBe('Éterické oleje')
+    expect(groups[3].label).toBe('Ostatní')
   })
   it('omits empty groups', () => {
     const groups = groupByType([oil('carrier', 'C')])

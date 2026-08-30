@@ -54,7 +54,7 @@ export function OilFormDrawer({ open, oil, manufacturers, submitting, onSubmit, 
                     </IconButton>
                   </Dialog.Close>
                 </div>
-                <div className="overflow-y-auto px-5 py-5">
+                <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
                   <OilForm
                     defaultOil={oil}
                     manufacturers={manufacturers}

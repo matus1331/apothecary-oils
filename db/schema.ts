@@ -17,7 +17,7 @@ export const manufacturers = sqliteTable(
 
 export const oils = sqliteTable('oils', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  productType: text('product_type', { enum: ['essential', 'carrier', 'hydrosol'] }).notNull(),
+  productType: text('product_type', { enum: ['essential', 'carrier', 'hydrosol', 'other'] }).notNull(),
   name: text('name').notNull(),
   latinName: text('latin_name'),
   manufacturerId: integer('manufacturer_id').references(() => manufacturers.id, {

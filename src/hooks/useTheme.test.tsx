@@ -1,28 +1,53 @@
 import { act, renderHook } from '@testing-library/react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useTheme } from './useTheme'
 
 beforeEach(() => {
   localStorage.clear()
   document.documentElement.removeAttribute('data-theme')
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockReturnValue({ matches: false, addEventListener() {}, removeEventListener() {} }),
+  )
 })
 
 describe('useTheme', () => {
-  it('defaults to system and sets no attribute', () => {
+  it('first visit follows the OS preference and applies an explicit data-theme', () => {
     const { result } = renderHook(() => useTheme())
-    expect(result.current.theme).toBe('system')
-    expect(document.documentElement.hasAttribute('data-theme')).toBe(false)
+    expect(result.current.theme).toBe('light')
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light')
   })
-  it('setTheme("dark") writes attribute and storage', () => {
+
+  it('first visit with a dark OS starts dark', () => {
+    ;(window.matchMedia as ReturnType<typeof vi.fn>).mockReturnValue({
+      matches: true,
+      addEventListener() {},
+      removeEventListener() {},
+    })
     const { result } = renderHook(() => useTheme())
-    act(() => result.current.setTheme('dark'))
+    expect(result.current.theme).toBe('dark')
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
+  })
+
+  it('toggle flips light ↔ dark and persists', () => {
+    const { result } = renderHook(() => useTheme())
+    act(() => result.current.toggle())
+    expect(result.current.theme).toBe('dark')
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
     expect(localStorage.getItem('oils.theme')).toBe('dark')
+    act(() => result.current.toggle())
+    expect(result.current.theme).toBe('light')
+    expect(localStorage.getItem('oils.theme')).toBe('light')
   })
-  it('setTheme("system") removes the attribute', () => {
+
+  it('a stored choice wins over the OS preference', () => {
+    localStorage.setItem('oils.theme', 'dark')
+    ;(window.matchMedia as ReturnType<typeof vi.fn>).mockReturnValue({
+      matches: false,
+      addEventListener() {},
+      removeEventListener() {},
+    })
     const { result } = renderHook(() => useTheme())
-    act(() => result.current.setTheme('light'))
-    act(() => result.current.setTheme('system'))
-    expect(document.documentElement.hasAttribute('data-theme')).toBe(false)
+    expect(result.current.theme).toBe('dark')
   })
 })

@@ -1,22 +1,29 @@
 import { useCallback, useEffect, useState } from 'react'
 
-export type Theme = 'light' | 'dark' | 'system'
+export type Theme = 'light' | 'dark'
 const KEY = 'oils.theme'
 
 function apply(theme: Theme): void {
-  const el = document.documentElement
-  if (theme === 'system') el.removeAttribute('data-theme')
-  else el.setAttribute('data-theme', theme)
+  document.documentElement.setAttribute('data-theme', theme)
+}
+
+function systemPrefersDark(): boolean {
+  try {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+  } catch {
+    return false
+  }
 }
 
 function initial(): Theme {
   try {
     const v = localStorage.getItem(KEY)
-    if (v === 'light' || v === 'dark' || v === 'system') return v
+    if (v === 'light' || v === 'dark') return v
   } catch {
     /* ignore */
   }
-  return 'system'
+  // First visit: follow the OS, then it becomes an explicit choice on first toggle.
+  return systemPrefersDark() ? 'dark' : 'light'
 }
 
 export function useTheme() {
@@ -35,5 +42,17 @@ export function useTheme() {
     setThemeState(t)
   }, [])
 
-  return { theme, setTheme }
+  const toggle = useCallback(() => {
+    setThemeState((cur) => {
+      const next: Theme = cur === 'dark' ? 'light' : 'dark'
+      try {
+        localStorage.setItem(KEY, next)
+      } catch {
+        /* ignore */
+      }
+      return next
+    })
+  }, [])
+
+  return { theme, setTheme, toggle }
 }

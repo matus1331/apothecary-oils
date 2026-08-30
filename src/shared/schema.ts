@@ -1,18 +1,20 @@
 import { z } from 'zod'
 
-export const PRODUCT_TYPES = ['essential', 'carrier', 'hydrosol'] as const
+export const PRODUCT_TYPES = ['essential', 'carrier', 'hydrosol', 'other'] as const
 export type ProductType = (typeof PRODUCT_TYPES)[number]
 
 export const PRODUCT_TYPE_LABELS: Record<ProductType, string> = {
   essential: 'Éterický olej',
   carrier: 'Rostlinný olej',
   hydrosol: 'Hydrolát',
+  other: 'Ostatní',
 }
 
 export const PRODUCT_TYPE_LABELS_PLURAL: Record<ProductType, string> = {
   essential: 'Éterické oleje',
   carrier: 'Rostlinné oleje',
   hydrosol: 'Hydroláty',
+  other: 'Ostatní',
 }
 
 /** '' | whitespace | null | undefined → null; otherwise the trimmed string. */

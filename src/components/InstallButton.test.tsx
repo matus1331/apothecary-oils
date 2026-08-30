@@ -17,12 +17,13 @@ describe('InstallButton', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('shows the iOS add-to-home-screen hint on iOS Safari', async () => {
+  it('shows the iOS add-to-home-screen instructions on iOS Safari', async () => {
     setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15')
     render(<InstallButton />)
-    await userEvent.click(screen.getByRole('button', { name: /Nainstalovat/ }))
-    expect(screen.getByText('Sdílet → Přidat na plochu')).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: /Na plochu/ }))
+    expect(screen.getByRole('dialog', { name: 'Přidat aplikaci na plochu' })).toBeInTheDocument()
+    expect(screen.getByText('Přidat na plochu iPhonu')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: 'Rozumím' }))
-    expect(screen.queryByText('Sdílet → Přidat na plochu')).toBeNull()
+    expect(screen.queryByRole('dialog')).toBeNull()
   })
 })

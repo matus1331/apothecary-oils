@@ -162,7 +162,7 @@ export function OilForm({ defaultOil, manufacturers, submitting, onSubmit, onDel
         <Textarea id="oil-note" aria-label="Poznámka" invalid={!!err('note')} {...register('note')} />
       </Field>
 
-      <div className="mt-1 flex items-center gap-2">
+      <div className="mt-1 flex flex-wrap items-center gap-2">
         <Button type="submit" disabled={submitting}>
           Uložit
         </Button>
@@ -170,7 +170,12 @@ export function OilForm({ defaultOil, manufacturers, submitting, onSubmit, onDel
           Zrušit
         </Button>
         {onDelete && (
-          <Button type="button" variant="danger" className="ml-auto" onClick={onDelete}>
+          <Button
+            type="button"
+            variant="danger"
+            className="w-full sm:ml-auto sm:w-auto"
+            onClick={onDelete}
+          >
             Smazat
           </Button>
         )}
