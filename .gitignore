@@ -5,3 +5,20 @@ dist
 .vercel
 *.log
 .DS_Store
+
+# Build / tooling output
+dist-ssr
+dev-dist
+coverage
+*.local
+.tmp
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
