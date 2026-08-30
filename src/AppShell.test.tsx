@@ -74,6 +74,8 @@ describe('AppShell', () => {
     renderShell()
     await userEvent.click(await screen.findByText('Levandule'))
     const dialog = screen.getByRole('dialog')
+    // edit mode: "Uložit" is disabled until a field changes
+    await userEvent.type(within(dialog).getByLabelText('Poznámka'), ' x')
     await userEvent.click(within(dialog).getByRole('button', { name: 'Uložit' }))
     expect(await screen.findByText('Bez připojení — změna se neuložila')).toBeInTheDocument()
   })

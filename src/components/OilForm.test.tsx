@@ -69,6 +69,27 @@ describe('OilForm', () => {
     expect(onDelete).toHaveBeenCalled()
   })
 
+  it('keeps "Uložit" disabled in edit mode until something changes', async () => {
+    render(
+      <OilForm
+        defaultOil={existing}
+        manufacturers={manufacturers}
+        onSubmit={() => {}}
+        onDelete={() => {}}
+        onCancel={() => {}}
+      />,
+    )
+    const save = screen.getByRole('button', { name: 'Uložit' })
+    expect(save).toBeDisabled()
+    await userEvent.type(screen.getByLabelText('Název'), 'x')
+    expect(save).toBeEnabled()
+  })
+
+  it('leaves "Uložit" enabled for a new oil (add mode)', () => {
+    render(<OilForm manufacturers={manufacturers} onSubmit={() => {}} onCancel={() => {}} />)
+    expect(screen.getByRole('button', { name: 'Uložit' })).toBeEnabled()
+  })
+
   it('the "+1 rok" chip fills the expiry date', async () => {
     const onSubmit = vi.fn()
     vi.setSystemTime(new Date(2026, 0, 15))
