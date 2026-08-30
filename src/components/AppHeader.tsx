@@ -1,4 +1,5 @@
 import { Plus } from 'lucide-react'
+import { BottleMark } from './BottleMark'
 import { Button } from './ui/Button'
 import { InstallButton } from './InstallButton'
 import { OfflineBadge } from './OfflineBadge'
@@ -8,7 +9,10 @@ export function AppHeader({ onAdd }: { onAdd: () => void }) {
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-bg/85 pt-[env(safe-area-inset-top)] backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
-        <h1 className="font-serif text-xl text-ink">Olejovník</h1>
+        <h1 className="flex items-center gap-2 font-serif text-xl text-ink">
+          <BottleMark className="h-6 text-accent" />
+          Olejovník
+        </h1>
         <div className="ml-auto flex items-center gap-2">
           <OfflineBadge />
           <InstallButton />
